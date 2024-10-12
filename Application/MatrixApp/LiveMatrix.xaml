@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatrixApp.LiveMatrix"
+             Title="LiveMatrix">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" VerticalOptions="StartAndExpand">
+            <HorizontalStackLayout VerticalOptions="Center" 
+                                   HorizontalOptions="FillAndExpand">
+                <Label Text="Set a Matrix Layout:"
+                       FontSize="18"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start" 
+                       Padding="10,0"/>
+
+                <Picker x:Name="matrixPicker"
+                        VerticalOptions="Center"
+                        HorizontalOptions="FillAndExpand"
+                        SelectedIndexChanged="OnPickerIndexChanged">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>8x8</x:String>
+                            <x:String>8x16</x:String>
+                            <x:String>16x8</x:String>
+                            <x:String>Custom</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout x:Name="customMatrixLayout" IsVisible="False" Padding ="0,10">
+                <Label Text="Enter custom dimensions:" VerticalOptions="Center" FontSize="14" Padding ="5,0"/>
+                <Entry x:Name="customMatrixEntry" WidthRequest="100" Placeholder="e.g. 10x10" />
+            </HorizontalStackLayout>
+
+
+            <ScrollView Padding="20" >
+                <Grid x:Name="DotGrid" Padding="10" HorizontalOptions="Center">
+                    <!-- Dots will be generated in the c# code-->
+                </Grid>
+            </ScrollView>
+
+            <Label x:Name="DotStatusLabel" Text="Dot Status" HorizontalOptions="Center" VerticalOptions="Start" />
+
+
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

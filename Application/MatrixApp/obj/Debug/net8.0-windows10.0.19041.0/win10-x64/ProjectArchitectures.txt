@@ -1,0 +1,1 @@
+C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\MatrixApp.csproj;x64
