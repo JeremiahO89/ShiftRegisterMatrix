@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MatrixApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+4ce0718f6dbbb9e7632eeeda4dee956bfe915f28")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+78f46bfb329fc4357159c6469070f1c1680a693c")]
 [assembly: System.Reflection.AssemblyProductAttribute("MatrixApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MatrixApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

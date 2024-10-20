@@ -29,13 +29,13 @@
     <AppXManifest Include="C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2024-10-12T22:38:24.957</Modified>
+      <Modified>2024-10-16T21:16:29.212</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2024-10-12T22:13:02.075</Modified>
+      <Modified>2024-10-16T21:16:29.031</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\MatrixApp.runtimeconfig.json">
       <PackagePath>MatrixApp.runtimeconfig.json</PackagePath>
@@ -43,11 +43,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\MatrixApp.dll">
       <PackagePath>MatrixApp.dll</PackagePath>
-      <Modified>2024-10-12T22:38:24.721</Modified>
+      <Modified>2024-10-16T21:16:27.680</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>MatrixApp.exe</PackagePath>
-      <Modified>2024-10-12T22:38:24.724</Modified>
+      <Modified>2024-10-16T21:16:27.728</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
@@ -287,7 +287,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\MatrixApp.deps.json">
       <PackagePath>MatrixApp.deps.json</PackagePath>
-      <Modified>2024-10-12T22:13:09.000</Modified>
+      <Modified>2024-10-16T21:16:28.715</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\techn\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.19041.44\lib\net8.0\Microsoft.Windows.SDK.NET.dll">
       <PackagePath>Microsoft.Windows.SDK.NET.dll</PackagePath>
