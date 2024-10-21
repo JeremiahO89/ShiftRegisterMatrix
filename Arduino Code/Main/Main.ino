@@ -1,6 +1,7 @@
 #include <ShiftRegister.h>
 
-ShiftRegister HighRegister();
+// Use 4 different pins which will result in 8 outputs
+ShiftRegister HighRegister(3,4,5,6,8);
 
 
 void setup() {

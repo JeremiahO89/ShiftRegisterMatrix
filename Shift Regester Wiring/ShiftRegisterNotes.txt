@@ -1,0 +1,18 @@
+Pin 13 turns the outputs High/Low, Pull it Low and outputs are high
+Pin 10 clears all of the internal memory, Pull it Low and memory will be cleared
+
+Pin 14 the state of which will be pushed into memory (High/Low)
+Pin 12 pushed the data in the memory to the output pins (High/Low)
+Pin 11 pushes the state into the memory (High for a push)
+
+Pin 9 is connected to Pin 14 of the next shift register to put them in series. 
+    Pin 9 acts as the state pin for the next register.
+
+
+
+
+
+
+
+Button Order on Prototype:
+State, Push, Output, Clear, Enable
