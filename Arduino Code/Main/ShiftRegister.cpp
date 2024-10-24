@@ -59,3 +59,4 @@ void ShiftRegister::clearMemory() {
   delay(DEBOUNCE);
   digitalWrite(_clear_pin, HIGH);
   delay(DEBOUNCE);
+}
