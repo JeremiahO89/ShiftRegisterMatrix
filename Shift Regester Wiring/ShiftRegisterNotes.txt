@@ -16,3 +16,7 @@ Pin 9 is connected to Pin 14 of the next shift register to put them in series.
 
 Button Order on Prototype:
 State, Push, Output, Clear, Enable
+
+
+
+The matrix will be all positive pins along the top and negative pins to the right

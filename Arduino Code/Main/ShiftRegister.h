@@ -11,11 +11,13 @@ class ShiftRegister {
     void pushState();
     void pushMemory();
     void disableOutputs();
+    void setArray_toMemory();
 
   private:
     int _state_pin;
     int _push_pin;
     int _output_pin;
+    int _clear_pin;
     int _enable_pin;
     int _num_outputs;
 };
