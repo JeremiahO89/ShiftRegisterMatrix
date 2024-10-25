@@ -16,6 +16,8 @@ int main() {
     // Call the decodeBluetooth function
     bool* output = decodeBluetooth(validData, sizeof(validData), &action, &num_Rows, &num_Columns);
 
+    
+
     // Check if decoding was successful
     if (output != nullptr) {
         // Output the result

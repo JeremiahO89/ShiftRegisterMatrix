@@ -1,6 +1,6 @@
+#include "BluetoothTypeConverter.h"
+#include "ShiftRegister.h" //Shift Register Functinality and setup
 #include <SoftwareSerial.h>
-#include <BluetoothTypeConverter.h>
-#include <ShiftRegister.h> //Shift Register Functinality and setup
 #include <Arduino.h>
 
 //Define the bluetooth chip
@@ -30,16 +30,16 @@ void loop() {
   while (bluetooth.available()) {
     char incomingByte = bluetooth.read();
     
-    if (incomingByte == "/n"){
-      // End of Data transfer
-      //uint8_t*(receivedData, receivedDataLen);
+    // if (incomingByte == "/n"){
+    //   // End of Data transfer
+    //   //uint8_t*(receivedData, receivedDataLen);
       
 
 
-    }
-    else{
-      receivedData += incomingByte;
-    }
+    // }
+    // else{
+    //   receivedData += incomingByte;
+    // }
   }
   
 

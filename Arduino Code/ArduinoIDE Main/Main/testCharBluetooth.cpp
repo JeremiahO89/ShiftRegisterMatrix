@@ -1,0 +1,48 @@
+#include "BluetoothTypeConverter.h"
+#include <iostream>
+
+
+
+int action;
+int num_Rows;
+int num_Columns;
+
+String inputData = "010404AA"; //uint8_t = {0x01, 0x04, 0x04, 0xAA}; // Example data
+int inputDataLen = 4;
+
+
+int main() {
+    uint8_t* validData = decodeBluetoothStr(inputData, inputDataLen);
+//1010
+//1010
+//0000
+//0000
+    // Call the decodeBluetooth function
+    bool* output = hexToBool(validData, inputDataLen, &action, &num_Rows, &num_Columns);
+
+    
+
+    // Check if decoding was successful
+    if (output != nullptr) {
+        // Output the result
+        std::cout << "Action: " << action << std::endl;
+        std::cout << "Rows: " << num_Rows << std::endl;
+        std::cout << "Columns: " << num_Columns << std::endl;
+
+        // Print the decoded LED states as a matrix
+        std::cout << "LED States (Matrix): " << std::endl;
+        for (int row = 0; row < num_Rows; ++row) {
+            for (int col = 0; col < num_Columns; ++col) {
+                std::cout << output[row * num_Columns + col] << " ";  // Print each bit in matrix format
+            }
+            std::cout << std::endl;  // Newline for next row
+        }
+
+        // Free the allocated memory for output
+        free(output);
+    } else {
+        std::cout << "Decoding failed or invalid data provided." << std::endl;
+    }
+
+    return 0;
+}

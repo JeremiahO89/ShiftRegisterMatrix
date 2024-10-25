@@ -1,6 +1,4 @@
 #include "BluetoothTypeConverter.h"
-#include <stdint.h> // for HEX values
-#include <cstdlib> // for malloc and free
 
 /* PACKET FORMAT:
     First byte (8 bits): preform (what to do)
@@ -34,11 +32,15 @@ uint8_t* decodeBluetoothStr(String dataString, int dataStringLen){
     return outputArray;
 }
 
+void freeUnit8Array(uint8_t* array){
+    free(array);
+}
+
 uint8_t charToHex(char highValue, char lowValue){
     /*
     Input: 2 char values from either "0"-"9" and "A"-"F"
     Output: Return the Hex value of the two in the form (highValue)(lowValue)
-    EXP: input "A" "9" returns HEX A9
+    Example: input "A" "9" returns HEX A9
     */
    uint8_t highValueInt = 0;
    uint8_t lowValueInt = 0;
@@ -53,8 +55,7 @@ uint8_t charToHex(char highValue, char lowValue){
    return (highValueInt<<4) | lowValueInt;
 }
 
-
-bool* decodeHEX(uint8_t* bluetoothData, int bluetoothDataSize, int* action, int* num_Rows, int* num_columns) {
+bool* hexToBool(uint8_t* bluetoothData, int bluetoothDataSize, int* action, int* num_Rows, int* num_columns) {
     /* 
     Input: 
         uint8_t* bluetoothData : an array of hex values
@@ -116,6 +117,6 @@ bool* decodeHEX(uint8_t* bluetoothData, int bluetoothDataSize, int* action, int*
     return outputArray; // Return pointer to bool array
 }
 
-void freeDecodedArray(bool* array) {
-    free(array); // Function to free allocated memory for the boolean array
+void freeBoolArray(bool* array) {
+    free(array);
 }
