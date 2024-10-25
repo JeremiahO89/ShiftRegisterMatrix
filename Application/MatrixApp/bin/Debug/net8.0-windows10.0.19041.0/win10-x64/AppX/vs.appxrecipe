@@ -29,7 +29,7 @@
     <AppXManifest Include="C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2024-10-16T21:16:29.212</Modified>
+      <Modified>2024-10-24T14:40:26.189</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -43,11 +43,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\MatrixApp.dll">
       <PackagePath>MatrixApp.dll</PackagePath>
-      <Modified>2024-10-16T21:16:27.680</Modified>
+      <Modified>2024-10-24T14:40:25.206</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>MatrixApp.exe</PackagePath>
-      <Modified>2024-10-16T21:16:27.728</Modified>
+      <Modified>2024-10-24T14:40:25.255</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\techn\Desktop\Code\Projects\ShiftRegisterMatrix\Application\MatrixApp\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>

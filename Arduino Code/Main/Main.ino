@@ -1,4 +1,11 @@
-#include <ShiftRegister.h>
+#include <SoftwareSerial.h> // 
+#include <BluetoothTypeConverter.h>
+#include <ShiftRegister.h> //Shift Register Functinality and setup
+
+//Define the bluetooth chip
+const int RX_PIN = 1; 
+const int TX_PIN = 2;
+SoftwareSerial bluetooth(RX_PIN, TX_PIN); 
 
 
 const int numRows = 8;
@@ -9,7 +16,9 @@ ShiftRegister LowRegister(8,9,10,11,12,numColumns);
 
 
 void setup() {
-  // put your setup code here, to run once:
+  bluetooth.begin(9600); // set bluetooth pulling rate
+
+
 }
 
 void loop() {
