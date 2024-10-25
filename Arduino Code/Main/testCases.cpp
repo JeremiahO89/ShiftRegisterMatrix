@@ -11,6 +11,8 @@ int main() {
     uint8_t validData[] = {0x01, 0x04, 0x04, 0xAA}; // Example data
 //1010
 //1010
+//0000
+//0000
     // Call the decodeBluetooth function
     bool* output = decodeBluetooth(validData, sizeof(validData), &action, &num_Rows, &num_Columns);
 

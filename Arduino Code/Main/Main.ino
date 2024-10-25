@@ -1,6 +1,7 @@
-#include <SoftwareSerial.h> // 
+#include <SoftwareSerial.h>
 #include <BluetoothTypeConverter.h>
 #include <ShiftRegister.h> //Shift Register Functinality and setup
+#include <Arduino.h>
 
 //Define the bluetooth chip
 const int RX_PIN = 1; 
@@ -18,10 +19,29 @@ ShiftRegister LowRegister(8,9,10,11,12,numColumns);
 void setup() {
   bluetooth.begin(9600); // set bluetooth pulling rate
 
-
 }
 
+
+
+String receivedData = "";
+
 void loop() {
-  // put your main code here, to run repeatedly:
+
+  while (bluetooth.available()) {
+    char incomingByte = bluetooth.read();
+    
+    if (incomingByte == "/n"){
+      // End of Data transfer
+      //uint8_t*(receivedData, receivedDataLen);
+      
+
+
+    }
+    else{
+      receivedData += incomingByte;
+    }
+  }
+  
+
 
 }
