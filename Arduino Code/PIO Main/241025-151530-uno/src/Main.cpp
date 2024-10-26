@@ -1,100 +1,44 @@
-// #include "BluetoothTypeConverter.h"
-// #include "ShiftRegister.h" //Shift Register Functinality and setup
-// #include <SoftwareSerial.h>
-// #include <Arduino.h>
+#include "BluetoothTypeConverter.h"
+#include "ShiftRegister.h" //Shift Register Functinality and setup
+#include <SoftwareSerial.h>
+//#include <Arduino.h>
 
-// //Define the bluetooth chip
-// const int RX_PIN = 1; 
-// const int TX_PIN = 2;
-// SoftwareSerial bluetooth(RX_PIN, TX_PIN); 
-
-
-// const int numRows = 8;
-// const int numColumns = 8;
-// // Use 4 different pins which will result in 8 outputs
-// ShiftRegister HighRegister(3,4,5,6,7,numRows);
-// ShiftRegister LowRegister(8,9,10,11,12,numColumns);
+//Define the bluetooth chip
+const int RX_PIN = 1; 
+const int TX_PIN = 2;
+SoftwareSerial bluetooth(RX_PIN, TX_PIN); 
 
 
-// void setup() {
-//   bluetooth.begin(9600); // set bluetooth pulling rate
+// These are FIXE
+const int numRows = 8;
+const int numColumns = 8;
+// Use 4 different pins which will result in 8 outputs
+ShiftRegister HighRegister(3,4,5,6,7,numRows);
+ShiftRegister LowRegister(8,9,10,11,12,numColumns);
 
-// }
 
+void setup() {
+  bluetooth.begin(9600); // set bluetooth pulling rate
 
+}
 
-// String receivedData = "";
+String receivedData = "";
+void loop() {
 
-// void loop() {
-
-//   while (bluetooth.available()) {
-//     char incomingByte = bluetooth.read();
+  while (bluetooth.available()) {
+    char incomingByte = bluetooth.read();
     
-//     // if (incomingByte == "/n"){
-//     //   // End of Data transfer
-//     //   //uint8_t*(receivedData, receivedDataLen);
+    // if (incomingByte == "/n"){
+    //   // End of Data transfer
+    //   //uint8_t*(receivedData, receivedDataLen);
       
 
 
-//     // }
-//     // else{
-//     //   receivedData += incomingByte;
-//     // }
-//   }
+    // }
+    // else{
+    //   receivedData += incomingByte;
+    // }
+  }
   
 
-
-// }
-
-
-
-
-#include "BluetoothTypeConverter.h"
-
-int action;
-int num_Rows;
-int num_Columns;
-
-String inputData = "010404AA"; // Example data
-int inputDataLen = 4;
-
-void setup() {
-    // Initialize Serial communication
-    Serial.begin(9600);
-
-    // Call the decodeBluetooth function
-    uint8_t* validData = decodeBluetoothStr(inputData, inputDataLen);
-    // Your hexToBool function should return a boolean array or whatever you need
-    bool* output = hexToBool(validData, inputDataLen, &action, &num_Rows, &num_Columns);
-
-    // Check if decoding was successful
-    if (output != nullptr) {
-        // Output the result
-        Serial.print("Action: ");
-        Serial.println(action);
-        Serial.print("Rows: ");
-        Serial.println(num_Rows);
-        Serial.print("Columns: ");
-        Serial.println(num_Columns);
-        Serial.println("LED States (Matrix):");
-
-        // Print the decoded LED states as a matrix
-        for (int row = 0; row < num_Rows; ++row) {
-            for (int col = 0; col < num_Columns; ++col) {
-                Serial.print(output[row * num_Columns + col]);
-                Serial.print(" ");  // Print each bit in matrix format
-            }
-            Serial.println();  // Newline for next row
-        }
-
-        // Free the allocated memory for output if using dynamic allocation
-        free(output);
-    } else {
-        Serial.println("Decoding failed or invalid data provided.");
-    }
 }
-
-void loop() {
-    // Your main logic can go here
-}
-

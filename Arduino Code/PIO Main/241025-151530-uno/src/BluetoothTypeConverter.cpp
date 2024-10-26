@@ -5,7 +5,6 @@
     Second byte (8 bits): number of rows
     Third byte (8 bits): number of columns
     REST bytes = #rows * #columns / 8
-
 */
 
 uint8_t charToHex(char highValue, char lowValue){
