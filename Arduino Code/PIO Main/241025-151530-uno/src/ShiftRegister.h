@@ -13,7 +13,7 @@ class ShiftRegister {
     void clearMemory();
     void disableOutputs();
     void enableOutputs();
-    void setArray_toMemory(int *array, int array_size);
+    void setArray_toMemory(bool* array, int num_bits);
 
   private:
     int _state_pin;

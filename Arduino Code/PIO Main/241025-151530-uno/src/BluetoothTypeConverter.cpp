@@ -52,6 +52,7 @@ uint8_t* decodeBluetoothStr(String dataString, int dataStringLen){
 
 void freeUnit8Array(uint8_t* array){
     free(array);
+    array = nullptr;
 }
 
 bool* hexToBool(uint8_t* bluetoothData, int bluetoothDataSize, int* action, int* num_Rows, int* num_columns) {
@@ -118,4 +119,5 @@ bool* hexToBool(uint8_t* bluetoothData, int bluetoothDataSize, int* action, int*
 
 void freeBoolArray(bool* array) {
     free(array);
+    array = nullptr;
 }

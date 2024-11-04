@@ -1,7 +1,8 @@
 #include <Arduino.h>
 #include "ShiftRegister.h"
 
-# define DEBOUNCE 1   //1 millisecond 
+# define DEBOUNCE 0.01  //10 microseconds 
+// GPT says arduino digitalwrite() can switch states in 3-5 microseconds #TODO: TESTME in the future
 
 // :: is the scope resolution operator 
 ShiftRegister::ShiftRegister(int state_pin, int push_pin, int output_pin, int clear_pin, int enable_pin, int num_outputs) {

@@ -2,7 +2,7 @@
 
 # define DEBOUNCE 1   //1 millisecond 
 
-void ShiftRegister::setArray_toMemory(int *array, int array_size) {
+void ShiftRegister::setArray_toMemory(bool* array, int array_size) {
   /*
   Inputs: int[] : array , int:array_size
   Outputs: None
