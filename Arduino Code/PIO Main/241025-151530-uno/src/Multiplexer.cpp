@@ -32,8 +32,10 @@ void Multiplexer::displayBoolArray(bool* highArray, int arrayLen, int action, in
                 // Display the memory on the outputs
                 _highRegister.pushMemory();
                 _lowRegister.pushMemory();
-                delay(CYCLE_TIME_ON); // leave the row and LEDS's on for a short time
+                delay(CYCLE_TIME_ON); // leave the LED's on for a short time
             }
+            
+            // done with loop free array
             free(lowArray);
             lowArray = nullptr;
         }

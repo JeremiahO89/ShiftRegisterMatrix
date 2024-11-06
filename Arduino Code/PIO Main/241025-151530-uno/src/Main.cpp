@@ -1,6 +1,6 @@
 #include "BluetoothTypeConverter.h"
 #include "ShiftRegister.h" //Shift Register Functinality and setup
-#include "Multiplex.h" //Multiplexer Functinality
+#include "Multiplexer.h" //Multiplexer Functinality
 #include <SoftwareSerial.h>
 //#include <Arduino.h>
 
@@ -14,8 +14,12 @@ SoftwareSerial bluetooth(RX_PIN, TX_PIN);
 const int numRows = 8;
 const int numColumns = 8;
 // Use 4 different pins which will result in 8 outputs
-ShiftRegister HighRegister(3,4,5,6,7,numRows);
-ShiftRegister LowRegister(8,9,10,11,12,numColumns);
+ShiftRegister highRegister = ShiftRegister(3,4,5,6,7,numRows);
+ShiftRegister lowRegister = ShiftRegister(8,9,10,11,12,numColumns);
+
+
+// setUp the Multiplexer class
+Multiplexer display = Multiplexer(highRegister, lowRegister);
 
 
 
@@ -31,23 +35,37 @@ int dataNum_Columns = 0;
 int dataAction = 0;
 
 
+uint8_t* hexData = nullptr;
+bool* ledStates = nullptr;
+
+
+
 void loop() {
 
   while (bluetooth.available()) {
     char incomingByte = bluetooth.read();
+
     if (incomingByte == '\n') {
-      
       // pointer to hex array (allocates memory)
-      uint8_t* hexData = decodeBluetoothStr(receivedData, dataCounter);
+      hexData = decodeBluetoothStr(receivedData, dataCounter);
+     
+      // frees the previous ledStates array if it exists
+      if (ledStates);
+        freeBoolArray(ledStates);
       // convert hex into usable data (allocates memory)
-      bool* ledStates = hexToBool(hexData, dataCounter, &dataAction, &dataNum_Rows, &dataNum_Columns);
-      freeUnit8Array(hexData); // (deallocate hexData)
+      ledStates = hexToBool(hexData, dataCounter, &dataAction, &dataNum_Rows, &dataNum_Columns);
+      freeUnit8Array(hexData); // Done with hex Data, deallocate hexData
+     
       /*we now have a pointer to an array(ledStates) of size dataCounter which has the led states */
+  
+      // display the matrix on the ouput (This only diplays for a short time (less than a second))
+      display.displayBoolArray(ledStates, dataCounter, dataAction, dataNum_Rows, dataNum_Columns);
 
+      
 
-
-
-    
+      // clear the string after message is received
+      receivedData = "";
+      dataCounter = 0;
     }
 
     else{
@@ -56,7 +74,4 @@ void loop() {
     }
   }
 
-  // clear the string after message is received
-  receivedData = "";
-  dataCounter = 0;
 }

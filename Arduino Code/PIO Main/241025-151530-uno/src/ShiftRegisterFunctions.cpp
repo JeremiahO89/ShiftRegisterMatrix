@@ -1,6 +1,6 @@
 #include "ShiftRegister.h"
 
-# define DEBOUNCE 1   //1 millisecond 
+# define DEBOUNCE 0.01  //10 microseconds 
 
 void ShiftRegister::setArray_toMemory(bool* array, int array_size) {
   /*

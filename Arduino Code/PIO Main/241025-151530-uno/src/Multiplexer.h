@@ -13,8 +13,7 @@ class Multiplexer {
     private:
         ShiftRegister& _highRegister;
         ShiftRegister& _lowRegister;
-
-
+        
 };
 
 #endif
