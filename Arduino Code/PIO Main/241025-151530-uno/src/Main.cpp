@@ -21,6 +21,14 @@ void setup() {
   highRegister.pushMemory();
 
   highRegister.highState();
+  highRegister.highState();
+  highRegister.highState();
+  highRegister.highState();
+  highRegister.highState();
+  highRegister.highState();
+  highRegister.highState();
+  highRegister.highState();
+  
   highRegister.pushState();
   highRegister.pushMemory();
 }
