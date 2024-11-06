@@ -1,49 +1,77 @@
 #include "BluetoothTypeConverter.h"
+#include "ShiftRegister.h" //Shift Register Functinality and setup
+#include "Multiplexer.h" //Multiplexer Functinality
+#include <SoftwareSerial.h>
+//#include <Arduino.h>
 
-int action;
-int num_Rows;
-int num_Columns;
+//Define the bluetooth chip
+const int RX_PIN = 2; 
+const int TX_PIN = 13;
+SoftwareSerial bluetooth(RX_PIN, TX_PIN); 
 
-String inputData = "010404AA"; // Example data
-int inputDataLen = 4;
+
+// These are FIXED for now
+const int numRows = 8;
+const int numColumns = 8;
+// Use 4 different pins which will result in 8 outputs
+ShiftRegister highRegister = ShiftRegister(12,9,10,4,11,numRows);
+ShiftRegister lowRegister = ShiftRegister(8,5,6,3,7,numColumns);
+
+
+// setUp the Multiplexer class
+Multiplexer display = Multiplexer(highRegister, lowRegister);
+
+
 
 void setup() {
-    // Initialize Serial communication
-    Serial.begin(9600);
+  bluetooth.begin(9600); // set bluetooth pulling rate
 
-    // Call the decodeBluetooth function
-    uint8_t* validData = decodeBluetoothStr(inputData, inputDataLen);
-    // Your hexToBool function should return a boolean array or whatever you need
-    bool* output = hexToBool(validData, inputDataLen, &action, &num_Rows, &num_Columns);
-
-    // Check if decoding was successful
-    if (output != nullptr) {
-        // Output the result
-        Serial.print("Action: ");
-        Serial.println(action);
-        Serial.print("Rows: ");
-        Serial.println(num_Rows);
-        Serial.print("Columns: ");
-        Serial.println(num_Columns);
-        Serial.println("LED States (Matrix):");
-
-        // Print the decoded LED states as a matrix
-        for (int row = 0; row < num_Rows; ++row) {
-            for (int col = 0; col < num_Columns; ++col) {
-                Serial.print(output[row * num_Columns + col]);
-                Serial.print(" ");  // Print each bit in matrix format
-            }
-            Serial.println();  // Newline for next row
-        }
-
-        // Free the allocated memory for output if using dynamic allocation
-        free(output);
-    } else {
-        Serial.println("Decoding failed or invalid data provided.");
-    }
 }
+
+String receivedData = "";
+int dataCounter = 0;
+int dataNum_Rows = 0;
+int dataNum_Columns = 0;
+int dataAction = 0;
+
+
+uint8_t* hexData = nullptr;
+bool* ledStates = nullptr;
+
+
 
 void loop() {
-    // Your main logic can go here
-}
 
+  while (bluetooth.available()) {
+    char incomingByte = bluetooth.read();
+
+    if (incomingByte == '\n') {
+      // pointer to hex array (allocates memory)
+      hexData = decodeBluetoothStr(receivedData, dataCounter);
+     
+      // frees the previous ledStates array if it exists
+      if (ledStates);
+        freeBoolArray(ledStates);
+      // convert hex into usable data (allocates memory)
+      ledStates = hexToBool(hexData, dataCounter, &dataAction, &dataNum_Rows, &dataNum_Columns);
+      freeUnit8Array(hexData); // Done with hex Data, deallocate hexData
+     
+      /*we now have a pointer to an array(ledStates) of size dataCounter which has the led states */
+  
+      // display the matrix on the ouput (This only diplays for a short time (less than a second))
+      display.displayBoolArray(ledStates, dataCounter, dataAction, dataNum_Rows, dataNum_Columns);
+
+      
+
+      // clear the string after message is received
+      receivedData = "";
+      dataCounter = 0;
+    }
+
+    else{
+      receivedData += incomingByte;
+      dataCounter += 1;
+    }
+  }
+
+}
