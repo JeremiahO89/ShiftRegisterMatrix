@@ -2,7 +2,7 @@
 #include "ShiftRegister.h"
 
 
-# define CYCLE_TIME_ON 1.5  //1.5 millisecond 
+# define CYCLE_TIME_ON 1000  //1.5 millisecond 
 
 Multiplexer::Multiplexer(ShiftRegister& highRegister, ShiftRegister& lowRegister): _highRegister(highRegister), _lowRegister(lowRegister){
 

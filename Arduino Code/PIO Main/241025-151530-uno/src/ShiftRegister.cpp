@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "ShiftRegister.h"
 
-# define DEBOUNCE 1  //10 microseconds 
+# define DEBOUNCE 0.01
 // GPT says arduino digitalwrite() can switch states in 3-5 microseconds #TODO: TESTME in the future
 
 // :: is the scope resolution operator 
@@ -12,13 +12,20 @@ ShiftRegister::ShiftRegister(int state_pin, int push_pin, int output_pin, int cl
   pinMode(clear_pin, OUTPUT);
   pinMode(enable_pin, OUTPUT);
 
-
   _state_pin = state_pin;
   _push_pin = push_pin;
   _output_pin = output_pin;
   _clear_pin = clear_pin;
   _enable_pin  = enable_pin ;
   _num_outputs = num_outputs; // this will change based on if its the colum or row register
+
+  digitalWrite(_state_pin, LOW);
+  digitalWrite(_push_pin, LOW);
+  digitalWrite(_output_pin, LOW);
+  digitalWrite(_enable_pin, LOW);
+  digitalWrite(_clear_pin, HIGH);
+
+
 }
 
 //Set the state
@@ -39,9 +46,9 @@ void ShiftRegister::pushState() {
 }
 //Push the memory to outputs
 void ShiftRegister::pushMemory() {
-  digitalWrite(_push_pin, HIGH);
+  digitalWrite(_output_pin, HIGH);
   delay(DEBOUNCE);
-  digitalWrite(_push_pin, LOW);
+  digitalWrite(_output_pin, LOW);
   delay(DEBOUNCE);
 }
 // Disable Outputs; Sets all output pins to LOW (0)
