@@ -77,13 +77,16 @@ void setup() {
     Serial.print(ledStates[i]);
   }
 
+    delay(1000);
+
+     /*we now have a pointer to an array(ledStates) of size dataCounter which has the led states */
+    // display the matrix on the ouput (This only displays for a short time (less than a second))
+    display.displayBoolArray(ledStates, dataCounter, dataAction, dataNum_Rows, dataNum_Columns);
+
+    Serial.println("DONE:");
 }      
 
 
 
 void loop() {
-    /*we now have a pointer to an array(ledStates) of size dataCounter which has the led states */
-    // display the matrix on the ouput (This only displays for a short time (less than a second))
-    display.displayBoolArray(ledStates, dataCounter, dataAction, dataNum_Rows, dataNum_Columns);
-
 }
