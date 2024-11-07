@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "ShiftRegister.h"
 
-# define DEBOUNCE 0.01
+# define DEBOUNCE 0.000
 // GPT says arduino digitalwrite() can switch states in 3-5 microseconds #TODO: TESTME in the future
 
 // :: is the scope resolution operator 
@@ -31,40 +31,40 @@ ShiftRegister::ShiftRegister(int state_pin, int push_pin, int output_pin, int cl
 //Set the state
 void ShiftRegister::highState() {
   digitalWrite(_state_pin, HIGH);
-  delay(DEBOUNCE);
+  //delay(DEBOUNCE);
   }
 void ShiftRegister::lowState() {
   digitalWrite(_state_pin, LOW);
-  delay(DEBOUNCE);
+  //delay(DEBOUNCE);
 }
 //Push the state into memory
 void ShiftRegister::pushState() {
   digitalWrite(_push_pin, HIGH);
-  delay(DEBOUNCE);
+  //delay(DEBOUNCE);
   digitalWrite(_push_pin, LOW);
-  delay(DEBOUNCE);
+  //delay(DEBOUNCE);
 }
 //Push the memory to outputs
 void ShiftRegister::pushMemory() {
   digitalWrite(_output_pin, HIGH);
-  delay(DEBOUNCE);
+  //delay(DEBOUNCE);
   digitalWrite(_output_pin, LOW);
-  delay(DEBOUNCE);
+  //delay(DEBOUNCE);
 }
 // Disable Outputs; Sets all output pins to LOW (0)
 void ShiftRegister::disableOutputs(){
   digitalWrite(_enable_pin, HIGH);
-  delay(DEBOUNCE);
+  //delay(DEBOUNCE);
 }
 //Enable Outputs; Sets all output pins to HIGH (1)
 void ShiftRegister::enableOutputs(){
   digitalWrite(_enable_pin, LOW);
-  delay(DEBOUNCE);
+  //delay(DEBOUNCE);
 }
 //Clear Memory; Sets all of the memory bits to LOW (0)
 void ShiftRegister::clearMemory() {
   digitalWrite(_clear_pin, LOW);
-  delay(DEBOUNCE);
+  //delay(DEBOUNCE);
   digitalWrite(_clear_pin, HIGH);
-  delay(DEBOUNCE);
+  //delay(DEBOUNCE);
 }

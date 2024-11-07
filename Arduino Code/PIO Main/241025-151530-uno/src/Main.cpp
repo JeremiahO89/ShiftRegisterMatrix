@@ -55,7 +55,8 @@ void setup() {
 
   //should be only the top let led
 
-  receivedData = "00 08 08 FF FF FF FF FF FF FF FF"; // should turn them all on
+  //receivedData = "00 08 08 FF 00 FF 00 FF 00 FF 00"; // should turn them all on
+  receivedData = "00 08 08 FF 81 81 81 81 81 81 FF"; // should turn them all on
 
   hexData = decodeBluetoothStr(receivedData, dataCounter);
 
@@ -89,4 +90,8 @@ void setup() {
 
 
 void loop() {
+
+  display.displayBoolArray(ledStates, dataCounter, dataAction, dataNum_Rows, dataNum_Columns);
+
+
 }
