@@ -84,6 +84,13 @@ void Multiplexer::sendData(bool* highArray, int arrayLen, int action, int num_ro
         
         while (counter--){
             sendData(highArray, arrayLen, 1, num_rows , num_columns);
+              for(int i = 0; i < num_rows*num_columns; i++){
+                    if (i%num_rows == 0){
+                    Serial.println("");
+                    }
+                    Serial.print(highArray[i]);
+                }
+                Serial.println("");
         }
         while (counter < (_highRegister._num_outputs - 1)){
             sendData(highArray, arrayLen, 2, num_rows , num_columns);

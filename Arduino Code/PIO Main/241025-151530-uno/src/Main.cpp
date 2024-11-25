@@ -80,5 +80,5 @@ void setup() {
 
 
 void loop() {
-  display.sendData(ledStates, dataCounter, 3, dataNum_Rows , dataNum_Columns);
+  display.sendData(ledStates, dataCounter, 4, dataNum_Rows , dataNum_Columns);
 }
