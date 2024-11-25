@@ -8,13 +8,12 @@
 class Multiplexer {
     public:
         Multiplexer(ShiftRegister& highRegister, ShiftRegister& lowRegister);
-        void sendData(bool* highArray, int arrayLen, int action, int num_rows, int num_columns);
-private:
+        void displayBoolArray(bool* highArray, int arrayLen, int action, int num_rows, int num_columns);
+
+    private:
         ShiftRegister& _highRegister;
         ShiftRegister& _lowRegister;
-
-        void displayBoolArray(bool* highArray, int arrayLen, int num_rows, int num_columns);
-
+        
 };
 
 #endif

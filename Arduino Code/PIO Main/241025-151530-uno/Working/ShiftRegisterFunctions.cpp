@@ -15,7 +15,7 @@ void ShiftRegister::setArray_toMemory(bool* array, int array_size) {
   }
 
   // set memory based on array
-  for (int index = array_size-1; index >=0; index--){
+  for (int index = 0; index < array_size; index ++){
     if (array[index]){
       highState();
     }

@@ -15,14 +15,13 @@ class ShiftRegister {
     void enableOutputs();
     void setArray_toMemory(bool* array, int num_bits);
 
-    int _num_outputs;
-
   private:
     int _state_pin;
     int _push_pin;
     int _output_pin;
     int _clear_pin;
     int _enable_pin;
+    int _num_outputs;
 };
 
 #endif
