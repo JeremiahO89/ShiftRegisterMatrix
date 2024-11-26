@@ -1,34 +1,52 @@
 #include "Multiplexer.h"
 #include "ShiftRegister.h"
-
 #include <Arduino.h>
 
 # define CYCLE_TIME_ON 2 //1.5 millisecond
-
 Multiplexer::Multiplexer(ShiftRegister& highRegister, ShiftRegister& lowRegister): _highRegister(highRegister), _lowRegister(lowRegister){
+    _displaySize = _highRegister._num_outputs * _lowRegister._num_outputs;
+    _displayArray = (bool*)calloc(_displaySize, sizeof(bool));
+    _startColumn = 0;
+
 }
 
-void leftShiftArray(bool* highArray, int arrayLen, int num_rows){
-    int numColumns = arrayLen/num_rows;
-    for(int pos = 0; pos<num_rows; pos++){
-        //shift each row 1 bit
-        memmove(&highArray[pos*numColumns], &highArray[numColumns*pos+1], (numColumns-1) * sizeof(bool));
-        //set last element in row to zero
-        highArray[(pos + 1) * numColumns - 1] = 0;
-    }
-}
-void rightShiftArray(bool* highArray, int arrayLen, int num_rows) {
-   int numColumns = arrayLen/num_rows;
-   for(int pos = 0; pos<num_rows; pos++){
-        //shift each row 1 bit
-        memmove(&highArray[numColumns*pos+1], &highArray[numColumns*pos], (numColumns-1) * sizeof(bool));
-        //set first element in row to zero
-        highArray[numColumns* pos] = 0;
+
+void grabArraySection(bool* displayArray, int displayLength, bool* inputArray, int inputLength, int numRows, int startColumn){
+    int displayColumns = displayLength/numRows; //8
+    int inputColumns = inputLength/numRows; // 8
+    for (int row = 0; row < numRows; row++){
+        memcpy(&displayArray[displayColumns * row], &inputArray[row * inputColumns + startColumn], displayColumns * sizeof(bool));
     }
 }
 
-void Multiplexer::displayBoolArray(bool* highArray, int arrayLen, int num_rows, int num_columns){
-    int DISPLAY_CYCLES = 10; //Sets how long it stays on
+void rightShiftArray(bool* displayArray, int displayLength, bool* inputArray, int inputLength, int numRows, int *startColumn){
+    // if (*startColumn > 0) { // Prevent over-shifting
+    //     (*startColumn)--;
+    // }
+    if (*startColumn <=0) { // Prevent over-shifting
+        (*startColumn) = (inputLength / numRows) - (displayLength / numRows) - 1 ;
+    }
+    grabArraySection(displayArray, displayLength, inputArray, inputLength, numRows, *startColumn);
+    (*startColumn)--;
+}
+
+void leftShiftArray(bool* displayArray, int displayLength, bool* inputArray, int inputLength, int numRows, int *startColumn){
+    // if (*startColumn < (inputLength / numRows) - (displayLength / numRows)) { // Prevent over-shifting
+    //     (*startColumn)++;
+    // }
+    if (*startColumn >= (inputLength / numRows) - (displayLength / numRows)) {
+        (*startColumn) = 0;
+    }
+    grabArraySection(displayArray, displayLength, inputArray, inputLength, numRows, *startColumn);
+    (*startColumn)++;
+}
+
+
+
+void Multiplexer::displayBoolArray(bool* highArray, int arrayLen, int num_rows){
+    int DISPLAY_CYCLES = 10; //Sets how long array is displayed for
+    
+    int num_columns = arrayLen / num_rows;
     while(DISPLAY_CYCLES--){
         // make array for lowRegister outputs
         bool* lowArray = (bool*)malloc(num_rows * sizeof(bool));
@@ -39,7 +57,7 @@ void Multiplexer::displayBoolArray(bool* highArray, int arrayLen, int num_rows, 
             for (int counter = 0; counter < num_rows; counter+= 1){
                 _highRegister.setArray_toMemory(&highArray[counter * num_columns], num_columns);
                 
-                // Set the correct row pins low
+                // Set the correct row pins to low
                 for(int pos = 0; pos < num_rows; pos++){
                     if (counter == pos){ // this is the current row we are on (this row needs to turn on)
                         lowArray[pos] = 0;
@@ -70,44 +88,57 @@ void Multiplexer::displayBoolArray(bool* highArray, int arrayLen, int num_rows, 
     _highRegister.pushMemory();
 }
 
+void printBoolArray(bool* array, int num_rows, int num_columns){
+  for(int i = 0; i < num_rows*num_columns; i++){
+    if (i%num_rows == 0){
+      Serial.println("");
+    }
+    Serial.print(array[i]);
+  }
+  Serial.println("");
+}
 
-void Multiplexer::sendData(bool* highArray, int arrayLen, int action, int num_rows, int num_columns){
+void Multiplexer::sendData(bool* highArray, int arrayLen, int num_rows, int action){
+
     // Move the data to the right
     if (action == 1){
-        rightShiftArray(highArray, arrayLen, num_rows);
+        rightShiftArray(_displayArray, _displaySize, highArray, arrayLen, num_rows, &_startColumn);
     }
-    else if(action == 2){
-        leftShiftArray(highArray, arrayLen, num_rows);
+
+    else if (action == 2){
+        leftShiftArray(_displayArray, _displaySize, highArray, arrayLen, num_rows, &_startColumn);
     }
-    else if(action == 3){
-        int counter = _highRegister._num_outputs;
-        
-        while (counter--){
-            sendData(highArray, arrayLen, 1, num_rows , num_columns);
-              for(int i = 0; i < num_rows*num_columns; i++){
-                    if (i%num_rows == 0){
-                    Serial.println("");
-                    }
-                    Serial.print(highArray[i]);
-                }
-                Serial.println("");
+
+    else if (action == 4) {
+        int maxShift = (arrayLen / num_rows) - (_displaySize / num_rows) - 1;
+        _startColumn = (arrayLen / num_rows) - (_displaySize / num_rows);
+        // Shift right until the end
+        for (int i = 0; i <= maxShift; i++) {
+            sendData(highArray, arrayLen, num_rows, 1);
         }
-        while (counter < (_highRegister._num_outputs - 1)){
-            sendData(highArray, arrayLen, 2, num_rows , num_columns);
-            counter ++;
+        // Shift left back to the start
+        for (int i = 0; i <= maxShift; i++) {
+            sendData(highArray, arrayLen, num_rows, 2);
         }
     }
-    else if(action == 4){
-        int counter = _highRegister._num_outputs;
-        
-        while (counter--){
-            sendData(highArray, arrayLen, 2, num_rows , num_columns);
+    else if (action == 5) {
+        int maxShift = (arrayLen / num_rows) - (_displaySize / num_rows) - 1;
+        _startColumn = 0;
+        // Shift left back to the start
+        for (int i = 0; i <= maxShift; i++) {
+            sendData(highArray, arrayLen, num_rows, 2);
         }
-        while (counter < (_highRegister._num_outputs - 1)){
-            sendData(highArray, arrayLen, 1, num_rows , num_columns);
-            counter ++;
+        // Shift right until the end
+        for (int i = 0; i <= maxShift; i++) {
+            sendData(highArray, arrayLen, num_rows, 1);
         }
     }
+
+    //Display 0 pos
+    else{
+        grabArraySection(_displayArray, _displaySize, highArray, arrayLen, num_rows, 0);
+    }
+
     //display the array
-    displayBoolArray(highArray, arrayLen, num_rows, num_columns);
+    displayBoolArray(_displayArray, _displaySize, num_rows);
 }
